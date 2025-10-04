@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}Driver Dashboard - Edu-Ride{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-car me-2"></i>Driver Dashboard</h2>
+                <div class="text-muted">Welcome, {{ current_user.username }}!</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-route me-2"></i>My Rides</h5>
+                    <a href="{{ url_for('create_ride') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus me-1"></i>Create New Ride
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if rides %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Route</th>
+                                        <th>Time</th>
+                                        <th>Fare</th>
+                                        <th>Status</th>
+                                        <th>Passengers</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ride in rides %}
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold">{{ ride.pickup_location }}</div>
+                                            <div class="text-muted small">{{ ride.dropoff_location }}</div>
+                                        </td>
+                                        <td>{{ ride.pickup_time.strftime('%H:%M, %d %b') }}</td>
+                                        <td class="fw-bold">₹{{ ride.fare }}</td>
+                                        <td>
+                                            {% if ride.status == 'available' %}
+                                                <span class="badge bg-success">Available</span>
+                                            {% elif ride.status == 'booked' %}
+                                                <span class="badge bg-warning">Booked</span>
+                                            {% elif ride.status == 'in_progress' %}
+                                                <span class="badge bg-info">In Progress</span>
+                                            {% elif ride.status == 'completed' %}
+                                                <span class="badge bg-secondary">Completed</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Cancelled</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if ride.is_group_ride %}
+                                                {{ ride.current_passengers }}/{{ ride.max_passengers }}
+                                            {% else %}
+                                                1/1
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if ride.status == 'booked' %}
+                                                <button class="btn btn-success btn-sm" onclick="startRide({{ ride.id }})">
+                                                    <i class="fas fa-play me-1"></i>Start
+                                                </button>
+                                            {% elif ride.status == 'in_progress' %}
+                                                <button class="btn btn-warning btn-sm" onclick="completeRide({{ ride.id }})">
+                                                    <i class="fas fa-check me-1"></i>Complete
+                                                </button>
+                                                <button class="btn btn-info btn-sm" onclick="generateQR({{ ride.id }})">
+                                                    <i class="fas fa-qrcode me-1"></i>QR
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-route text-muted display-4 mb-3"></i>
+                            <h5 class="text-muted">No rides created yet</h5>
+                            <p class="text-muted">Create your first ride to start earning</p>
+                            <a href="{{ url_for('create_ride') }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-1"></i>Create Ride
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Earnings</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Today:</span>
+                        <span class="fw-bold text-success">₹0</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>This Week:</span>
+                        <span class="fw-bold text-success">₹0</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>This Month:</span>
+                        <span class="fw-bold text-success">₹0</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Total Rides:</span>
+                        <span class="fw-bold">{{ rides|length }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-star me-2"></i>Rating</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="display-6 text-warning">4.8</div>
+                    <div class="text-muted">★★★★★</div>
+                    <small class="text-muted">Based on 25 reviews</small>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Create rides during peak hours</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Offer group rides for better earnings</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Keep your profile updated</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function startRide(rideId) {
+    if (confirm('Start this ride?')) {
+        // Update ride status to in_progress
+        fetch('/api/start_ride', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ride_id: rideId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Ride started!');
+                location.reload();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while starting the ride');
+        });
+    }
+}
+
+function completeRide(rideId) {
+    if (confirm('Mark this ride as completed?')) {
+        // Update ride status to completed
+        fetch('/api/complete_ride', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ride_id: rideId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Ride completed!');
+                location.reload();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while completing the ride');
+        });
+    }
+}
+
+function generateQR(rideId) {
+    window.open('/generate_qr/' + rideId, '_blank');
+}
+</script>
+{% endblock %}

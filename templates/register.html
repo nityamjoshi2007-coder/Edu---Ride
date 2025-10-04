@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Edu-Ride{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-plus text-primary display-4"></i>
+                        <h3 class="mt-3">Register</h3>
+                        <p class="text-muted">Join Edu-Ride community</p>
+                    </div>
+                    
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="user_type" class="form-label">I am a</label>
+                            <select class="form-select" id="user_type" name="user_type" required onchange="toggleDriverFields()">
+                                <option value="">Select type</option>
+                                <option value="student">Student</option>
+                                <option value="driver">Driver</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Student fields -->
+                        <div id="student-fields" style="display: none;">
+                            <div class="mb-3">
+                                <label for="university" class="form-label">University/College</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
+                                    <input type="text" class="form-control" id="university" name="university">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Driver fields -->
+                        <div id="driver-fields" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="license_number" class="form-label">License Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                        <input type="text" class="form-control" id="license_number" name="license_number">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="vehicle_number" class="form-label">Vehicle Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-car"></i></span>
+                                        <input type="text" class="form-control" id="vehicle_number" name="vehicle_number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-4">
+                        <p class="text-muted">Already have an account? <a href="{{ url_for('login') }}" class="text-decoration-none">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleDriverFields() {
+    const userType = document.getElementById('user_type').value;
+    const studentFields = document.getElementById('student-fields');
+    const driverFields = document.getElementById('driver-fields');
+    
+    if (userType === 'student') {
+        studentFields.style.display = 'block';
+        driverFields.style.display = 'none';
+    } else if (userType === 'driver') {
+        studentFields.style.display = 'none';
+        driverFields.style.display = 'block';
+    } else {
+        studentFields.style.display = 'none';
+        driverFields.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

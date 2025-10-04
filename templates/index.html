@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Edu-Ride - Home{% endblock %}
+
+{% block content %}
+<div class="hero-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Edu-Ride</h1>
+                <p class="lead mb-4">Your reliable ride-sharing solution for the Sion-Somaiya route. Connect with local drivers, share rides, and save money on your daily commute.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Get Started</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">Login</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <i class="fas fa-route display-1 text-warning"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h2 class="display-5 fw-bold">Why Choose Edu-Ride?</h2>
+            <p class="lead text-muted">Making your daily commute easier, safer, and more affordable</p>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-users text-primary display-4 mb-3"></i>
+                    <h5 class="card-title">Group Rides</h5>
+                    <p class="card-text">Share rides with fellow students and split the cost. Travel together, save together!</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-shield-alt text-success display-4 mb-3"></i>
+                    <h5 class="card-title">Safe & Verified</h5>
+                    <p class="card-text">All drivers are verified with proper documentation. Your safety is our priority.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-mobile-alt text-info display-4 mb-3"></i>
+                    <h5 class="card-title">Easy Payments</h5>
+                    <p class="card-text">Pay securely with UPI, QR codes, or cash. Transparent pricing with no hidden charges.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h3 class="fw-bold mb-4">For Students</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Find available rides instantly</li>
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Join group rides and save money</li>
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Real-time tracking and updates</li>
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Secure payment options</li>
+                </ul>
+                <a href="{{ url_for('register') }}" class="btn btn-primary">Register as Student</a>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="fw-bold mb-4">For Drivers</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Get regular customers</li>
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Digital payment history</li>
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Bonus points for completed trips</li>
+                    <li class="mb-3"><i class="fas fa-check text-success me-2"></i>Flexible working hours</li>
+                </ul>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-primary">Register as Driver</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2 class="display-5 fw-bold mb-4">How It Works</h2>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-3 text-center">
+            <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <span class="fw-bold">1</span>
+            </div>
+            <h5>Sign Up</h5>
+            <p class="text-muted">Register as a student or driver with your basic information</p>
+        </div>
+        
+        <div class="col-md-3 text-center">
+            <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <span class="fw-bold">2</span>
+            </div>
+            <h5>Find/Offer Rides</h5>
+            <p class="text-muted">Students can find available rides, drivers can create ride offers</p>
+        </div>
+        
+        <div class="col-md-3 text-center">
+            <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <span class="fw-bold">3</span>
+            </div>
+            <h5>Book & Travel</h5>
+            <p class="text-muted">Book your ride, track in real-time, and enjoy your journey</p>
+        </div>
+        
+        <div class="col-md-3 text-center">
+            <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <span class="fw-bold">4</span>
+            </div>
+            <h5>Pay & Rate</h5>
+            <p class="text-muted">Pay securely and rate your experience for better service</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
